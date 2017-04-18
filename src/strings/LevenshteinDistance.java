@@ -19,7 +19,7 @@ public class LevenshteinDistance {
       assert(levenshteinDistance("abcdefg", "abcdq")==3);
    }
    
-   public static int levenshteinDistance (String s, String t) {
+   public static int levenshteinDistance2 (String s, String t) {
       //Using full matrix
       if(s == t)
          return 0;
@@ -52,5 +52,41 @@ public class LevenshteinDistance {
       }
       return d[m][n];
    }
-
+   
+   public static int levenshteinDistance (String s, String t) {
+      //Using two arrays
+      if(s == t)
+         return 0;
+      if(s.length() == 0) 
+         return t.length();
+      if(t.length() == 0)
+         return s.length();
+      
+      int m = s.length();
+      int n = t.length();
+      
+      int[] prev = new int[n+1];
+      int[] d = new int[n+1];
+      
+      //Initialize 
+      for(int i=0;i<=n;i++) {
+         prev[i] = i;
+      }
+      
+      for(int i=1;i<=m;i++){
+         d[0] = i;
+         for(int j=1;j<=n;j++) {
+            if(s.charAt(i-1) == t.charAt(j-1)) {
+               d[j] = prev[j-1];
+            }
+            else {
+               int temp = Math.min(prev[j], d[j-1]);
+               temp = Math.min(temp, prev[j-1]);
+               d[j] = temp + 1;
+            }
+         }
+         System.arraycopy(d, 0, prev, 0, n+1);
+      }
+      return d[n];
+   }
 }
