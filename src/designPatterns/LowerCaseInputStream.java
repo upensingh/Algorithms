@@ -1,3 +1,9 @@
+package designPatterns;
+
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
 Example for Decorator Pattern, LowerCaseInputStream extends FilterInputStream
 and overrides read methods to convert all characters to lower case, 
